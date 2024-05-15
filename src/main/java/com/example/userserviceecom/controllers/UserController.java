@@ -11,15 +11,11 @@ import com.example.userserviceecom.services.UserService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    @Autowired
     private UserService userService;
 
     UserController(UserService userService) {
@@ -43,6 +39,15 @@ public class UserController {
     }
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody LogoutRequestDto requestDto){
+        return null;
+    }
+    @GetMapping("/validate/{token}")
+    public UserDto validateToken(@PathVariable String token) {
+        return null;
+    }
+
+    @GetMapping("/users/{id}")
+    public UserDto getUserById(@PathVariable Long id) {
         return null;
     }
 }

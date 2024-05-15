@@ -11,25 +11,15 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public User signUp(String email, String name, String password) {
-
-
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        }
+    public User signUp(String name, String email, String password) {
 
         User user = new User();
         user.setEmail(email);
@@ -46,5 +36,7 @@ public class UserService {
     public void logout(Token token) {
 
     }
-
+    public User validateToken(String token) {
+        return null;
+    }
 }
