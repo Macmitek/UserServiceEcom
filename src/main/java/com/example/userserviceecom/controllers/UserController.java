@@ -1,13 +1,12 @@
 package com.example.userserviceecom.controllers;
 
 
-import com.example.userserviceecom.dtos.LoginRequestDto;
-import com.example.userserviceecom.dtos.LogoutRequestDto;
-import com.example.userserviceecom.dtos.SignUpRequestDto;
-import com.example.userserviceecom.dtos.UserDto;
+import com.example.userserviceecom.dtos.*;
 import com.example.userserviceecom.models.Token;
 import com.example.userserviceecom.models.User;
 import com.example.userserviceecom.services.UserService;
+import exceptions.InvalidPasswordException;
+import exceptions.InvalidTokenException;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +32,23 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Token login( @RequestBody LoginRequestDto requestDto){
-
-        return null;
+    public LoginResponseDto login(@RequestBody LoginRequestDto requestDto) throws InvalidPasswordException {
+        Token token =  userService.login(requestDto.getEmail(), requestDto.getPassword());
+        LoginResponseDto loginResponseDto = new LoginResponseDto();
+        loginResponseDto.setToken(token);
+        return loginResponseDto;
     }
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestBody LogoutRequestDto requestDto){
-        return null;
+    public ResponseEntity<Void> logout(@RequestBody LogoutRequestDto requestDto) throws InvalidTokenException {
+        ResponseEntity<Void> responseEntity = null;
+        try {
+           userService.logout(requestDto.getToken());
+           responseEntity = ResponseEntity.ok().build();
+       }catch (Exception e){
+           System.out.println("Something went wrong");
+           responseEntity = ResponseEntity.badRequest().build();
+       }
+        return responseEntity;
     }
     @GetMapping("/validate/{token}")
     public UserDto validateToken(@PathVariable String token) {
