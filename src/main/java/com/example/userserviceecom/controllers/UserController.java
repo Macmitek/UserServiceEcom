@@ -9,6 +9,7 @@ import exceptions.InvalidPasswordException;
 import exceptions.InvalidTokenException;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,10 +44,10 @@ public class UserController {
         ResponseEntity<Void> responseEntity = null;
         try {
            userService.logout(requestDto.getToken());
-           responseEntity = ResponseEntity.ok().build();
+           responseEntity = new  ResponseEntity<>(HttpStatus.OK);
        }catch (Exception e){
            System.out.println("Something went wrong");
-           responseEntity = ResponseEntity.badRequest().build();
+           responseEntity = new  ResponseEntity<>(HttpStatus.BAD_REQUEST);
        }
         return responseEntity;
     }
