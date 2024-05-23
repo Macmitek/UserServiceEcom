@@ -79,7 +79,13 @@ public class UserService {
         tokenRepository.save(token);
         return;
     }
-    public User validateToken(String token) {
-        return null;
+    public User validateToken(String token) throws InvalidTokenException {
+        Optional<Token> optionalToken = tokenRepository.findByValueAndDeleted(token, false);
+
+        if (optionalToken.isEmpty()) {
+            throw new InvalidTokenException("Invalid token passed.");
+        }
+
+        return optionalToken.get().getUser();
     }
 }

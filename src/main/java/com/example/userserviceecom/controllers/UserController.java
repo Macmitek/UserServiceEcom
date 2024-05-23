@@ -50,9 +50,9 @@ public class UserController {
        }
         return responseEntity;
     }
-    @GetMapping("/validate/{token}")
-    public UserDto validateToken(@PathVariable String token) {
-        return null;
+    @PostMapping("/validate/{token}")
+    public UserDto validateToken(@PathVariable String token) throws InvalidTokenException {
+        return UserDto.from(userService.validateToken(token));
     }
 
     @GetMapping("/users/{id}")
