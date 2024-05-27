@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.test.annotation.Commit;
 
 import java.util.UUID;
 
@@ -22,10 +23,11 @@ class UserServiceEcomApplicationTests {
     void contextLoads() {
     }
     @Test
+    @Commit
     void storeRegisteredClientInDB(){
         RegisteredClient oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("oidc-client")
-                .clientSecret("{noop}secret")
+                .clientSecret("$2a$12$hZsE/1vENrEq25xefmrBSu.KQOnWgg75LwcbQd0imm8RX5BV1QeTa")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
